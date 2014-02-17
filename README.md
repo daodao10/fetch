@@ -1,17 +1,16 @@
-fetch
-=====
+# Fetch
 
-Fetch &amp; Generate stock data of China Market for Metastock
+#### Fetch &amp; Generate stock data of China Market for Metastock
 
 1. get today's market daily data after market closed: 
 
-python fetch_today_data.py
+   python fetch_today_data.py
 
 2. get market daily data in period:
 
-python fetch_data.py [-s {start_date}] [-e {end_date}]
+   python fetch_data.py [-s {start_date}] [-e {end_date}]
 
-NOTE:
+### NOTE:
 
 date format: yyyymmdd
 

@@ -1,5 +1,4 @@
 # Fetch
----
 
 #### Fetch &amp; Generate stock data of China Market for Metastock
 
@@ -16,6 +15,7 @@
 	```
 	
 	NOTE:
+	
 	date format: yyyyMMdd
 
 	in generally, use it when use this tool first time or when you forget to get data after market closed

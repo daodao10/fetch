@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # 
 # this file is for fetching the start day of the stock
 # after fetch start day store it to the symbol file

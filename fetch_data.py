@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 #
 # fetch data in the range
 # can do it anytime
@@ -19,15 +21,20 @@ class History(threading.Thread):
 			data = self.queue.get()
 			self.download_history(data['code'], data['start_day'], data['end_day'])
 			self.queue.task_done()
+			#if self.queue.empty():
+			#	print "finished"
 
 	def download_history(self, code, start_day, end_day):
 		try:
 			filename = None
 			if len(code) > 6: # for index
 				if code == '0000001': # correct SH index symbol
-					filename = '999999.csv'
+					filename = 'data/999999.csv'
 			else:
 				code = '%s%s' % (dao_toolkit.Helper.iif(str.startswith(code, '6'), '0', '1'), code)
+
+			if not filename:
+				filename = "data/" + code[1:] + ".csv"
 
 			url = 'http://quotes.money.163.com/service/chddata.html?code={0}&start={1}&end={2}&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;VOTURNOVER'\
 			.format(code, start_day, end_day)
@@ -58,6 +65,7 @@ def fetch_history(start_day, end_day):
 				queue.put({'code': dao_toolkit.Helper.iif(c == '999999','0000001', '1399001'), 'start_day': start_day, 'end_day': end_day })
 				continue
 			queue.put({'code': c, 'start_day': start_day,'end_day': end_day })
+
 		print 'has %d symbol(s)' % (len(lines))
 	except Exception,e:
 		print e
@@ -66,9 +74,10 @@ def fetch_history(start_day, end_day):
 	print 'start to download'
 	for i in range(10):
 		consumer  = History('download.thread.' + str(i), queue)
-		#consumer.daemon = True
+		consumer.setDaemon(True)
 		consumer.start()
-		#consumer.join()
+
+	queue.join()
 		
 def main(argv):
 	start_day = None
@@ -92,6 +101,10 @@ def main(argv):
 			elif opt == '-e':
 				end_day = arg
 
+		if not start_day:
+			start_day = 'OPEN'
+		if not end_day:
+			end_day = 'TODAY'
 		print 'going to fetch data from [%s] to [%s]' % (start_day, end_day)
 
 	else:

@@ -12,6 +12,7 @@
 
 	```bash
 	python fetch_data.py [-s {start_date}] [-e {end_date}]
+    python format_data.py
 	```
 	
 ##NOTE:

@@ -6,15 +6,14 @@ import time, re
 
 class MetastockHelper:
     FILE_HEADER = '<DTYYYYMMDD>,<TICKER>,<NAME>,<CLOSE>,<HIGH>,<LOW>,<OPEN>,<VOL>\r\n'
+    FILE_HEADER2 = '<DTYYYYMMDD>,<TICKER>,<NAME>,<CLOSE>,<HIGH>,<LOW>,<OPEN>,<VOL>,<CHG>,<PCT>,<TURNOVER>\r\n'
 
 
 class Helper:
     @staticmethod
-    def format_date_string(str_date):
-        return time.strftime('%Y%m%d', time.strptime(str_date, '%Y-%m-%d'))
-
-    @staticmethod
-    def format_date_string(str_date, src_style, dest_style):
+    # format date string 
+    # by default from %Y-%m-%d to %Y%m%d
+    def format_date_string(str_date, src_style = '%Y-%m-%d', dest_style = '%Y%m%d'):
         return time.strftime(dest_style, time.strptime(str_date, src_style))
 
     @staticmethod
